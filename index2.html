@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Галина — художник. Живопись, выставки, портфолио.">
+  <title>Галина — Художник</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e0c9a6;
+      --dark: #0a192f;
+      --dark-2: #112240;
+      --light: #f5f0e8;
+      --white: #ffffff;
+      --text: #8892b0;
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      padding: 1.5rem 0;
+      background: transparent;
+      z-index: 1000;
+    }
+    .navbar.scrolled {
+      background: rgba(10, 25, 47, 0.88);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      padding: 0.8rem 0;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+    .navbar-brand {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--white) !important;
+      letter-spacing: 0.02em;
+    }
+    .navbar-brand span { color: var(--gold); }
+    .nav-link {
+      color: var(--light) !important;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin: 0 0.6rem;
+      position: relative;
+      letter-spacing: 0.03em;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.35s ease;
+      border-radius: 2px;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: var(--gold) !important; }
+
+    .navbar-toggler {
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      padding: 0.5rem 0.7rem;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23c9a96e' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1920&q=80') center/cover no-repeat fixed;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,25,47,0.95) 0%, rgba(10,25,47,0.75) 45%, rgba(10,25,47,0.4) 100%);
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 3rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 9vw, 7rem);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .hero-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.3rem);
+      color: var(--gold-light);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text {
+      color: var(--text);
+      max-width: 520px;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      z-index: 2;
+      text-align: right;
+      color: var(--text);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    /* scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .scroll-indicator .line {
+      display: block;
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+    @keyframes scrollPulse {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--dark);
+      border: none;
+      padding: 0.95rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-gold:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px -12px rgba(201, 169, 110, 0.55);
+      color: var(--dark);
+    }
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -120%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-gold:hover::after { left: 120%; }
+
+    .btn-outline-gold {
+      border: 2px solid rgba(201, 169, 110, 0.6);
+      color: var(--gold);
+      padding: 0.95rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: all 0.45s ease;
+      background: transparent;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px -12px rgba(201, 169, 110, 0.35);
+    }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 110px 0; position: relative; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    .section-title span { color: var(--gold); font-style: italic; }
+    .section-subtitle {
+      color: var(--text);
+      font-size: 1.05rem;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-img-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7);
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+    .about-img-wrap:hover img { transform: scale(1.06); }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      top: 18px; left: 18px; right: -18px; bottom: -18px;
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      z-index: -1;
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+    .about-img-wrap:hover::after {
+      top: 10px; left: 10px; right: -10px; bottom: -10px;
+    }
+
+    .about-text p {
+      color: var(--text);
+      line-height: 1.9;
+      font-size: 1.02rem;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p strong { color: var(--light); font-weight: 600; }
+
+    .about-quote {
+      border-left: 3px solid var(--gold);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      line-height: 1.6;
+    }
+
+    /* counters */
+    .counter-item { text-align: center; }
+    .counter-number {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .counter-label {
+      color: var(--text);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-grid { margin-top: 1rem; }
+    .gallery-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 340px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.12); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,25,47,0.97) 0%, rgba(10,25,47,0.3) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.8rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay h5 {
+      font-family: var(--font-heading);
+      color: var(--white);
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      transform: translateY(18px);
+      transition: transform 0.5s ease;
+    }
+    .gallery-overlay p {
+      color: var(--gold);
+      font-size: 0.85rem;
+      margin: 0;
+      transform: translateY(18px);
+      transition: transform 0.5s ease 0.08s;
+    }
+    .gallery-item:hover .gallery-overlay h5,
+    .gallery-item:hover .gallery-overlay p {
+      transform: translateY(0);
+    }
+
+    /* modal */
+    .modal-content {
+      background: var(--dark-2);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .modal-content .btn-close {
+      filter: invert(1) brightness(2);
+      z-index: 10;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline {
+      position: relative;
+      padding: 1rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 3rem 3rem 0;
+    }
+    .timeline-item:nth-child(even) {
+      margin-left: 50%;
+      padding: 0 0 3rem 3rem;
+    }
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 4px solid var(--dark);
+      box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.25);
+      z-index: 2;
+    }
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -10px;
+      right: auto;
+    }
+    .timeline-content {
+      background: rgba(17, 34, 64, 0.65);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: all 0.45s ease;
+    }
+    .timeline-content:hover {
+      border-color: var(--gold);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px -18px rgba(0,0,0,0.6);
+    }
+    .timeline-date {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-content h5 {
+      font-family: var(--font-heading);
+      color: var(--white);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-content p {
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-form .form-control {
+      background: rgba(17, 34, 64, 0.6);
+      border: 1px solid rgba(201, 169, 110, 0.18);
+      border-radius: 12px;
+      color: var(--white);
+      padding: 1rem 1.4rem;
+      font-size: 0.95rem;
+      transition: all 0.35s ease;
+    }
+    .contact-form .form-control:focus {
+      background: rgba(17, 34, 64, 0.9);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 0.25rem rgba(201, 169, 110, 0.12);
+      color: var(--white);
+    }
+    .contact-form .form-control::placeholder { color: var(--text); }
+
+    .social-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(201, 169, 110, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.2rem;
+      transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      text-decoration: none;
+    }
+    .social-icon:hover {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+      transform: translateY(-6px) rotate(360deg);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark-2);
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(201, 169, 110, 0.08);
+    }
+    .footer p {
+      color: var(--text);
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991.98px) {
+      .hero { background-attachment: scroll; }
+      .hero-badge { display: none; }
+      .timeline::before { left: 20px; }
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 0 2.5rem 3.5rem;
+      }
+      .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: 10px;
+        right: auto;
+      }
+      .about-img-wrap::after { display: none; }
+    }
+
+    @media (max-width: 767.98px) {
+      section { padding: 70px 0; }
+      .hero { min-height: 600px; }
+      .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+      .gallery-item { height: 280px; }
+      .scroll-indicator { display: none; }
+    }
+
+    @media (max-width: 575.98px) {
+      .hero { min-height: 550px; }
+      .btn-gold, .btn-outline-gold {
+        padding: 0.85rem 1.8rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="#home">Галина<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#home">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Обо мне</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Галерея</a></li>
+          <li class="nav-item"><a class="nav-link" href="#exhibitions">Выставки</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="hero-eyebrow" data-aos="fade-right" data-aos-delay="200">Художник · Живопись</div>
+          <h1 class="hero-title" data-aos="fade-right" data-aos-delay="300">
+            Галина<br><span>искусство</span>
+          </h1>
+          <p class="hero-subtitle" data-aos="fade-right" data-aos-delay="400">масло · холст · эмоция</p>
+          <p class="hero-text" data-aos="fade-right" data-aos-delay="500">
+            Мои картины — это разговор без слов. Цвет, свет и фактура холста передают то, что невозможно выразить иначе. Каждая работа — часть меня, застывшая в краске.
+          </p>
+          <div class="d-flex flex-wrap gap-3" data-aos="fade-right" data-aos-delay="600">
+            <a href="#gallery" class="btn-gold">Смотреть галерею</a>
+            <a href="#contact" class="btn-outline-gold">Связаться</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-badge">Carrousel du Louvre · Paris 2024</div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <span class="line"></span>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5" data-aos="fade-right" data-aos-duration="1000">
+          <div class="about-img-wrap">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="Галина — художник" loading="lazy">
+          </div>
+        </div>
+        <div class="col-lg-7 about-text" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="150">
+          <span class="section-label">Обо мне</span>
+          <h2 class="section-title">Путь <span>художника</span></h2>
+          <p>
+            Обучалась у художников <strong>Всеволода Гальянова</strong> и <strong>Оксаны Архиповой</strong>. С моими педагогами поддерживаю связь до сих пор — живой диалог с наставниками помогает расти и не останавливаться.
+          </p>
+          <p>
+            В декабре 2025 года пробовала себя как организатор иммерсивного шоу с выставкой картин и выступлением спикеров по теме «Воплоти мечту». Осталась довольна отзывами и планирую развиваться в этом направлении.
+          </p>
+          <div class="about-quote">
+            «В 2024 году отправляла свои работы на выставку в Париж, Carrousel du Louvre, откуда они не вернулись. Для меня это значило, что картины удались.»
+          </div>
+          <p>
+            Продолжаю общаться с учителями по живописи и регулярно участвую в художественных выставках школы <strong>Galyanov-Art</strong>.
+          </p>
+
+          <div class="row g-4 mt-4">
+            <div class="col-4 counter-item">
+              <div class="counter-number" data-target="10">0</div>
+              <div class="counter-label">Лет практики</div>
+            </div>
+            <div class="col-4 counter-item">
+              <div class="counter-number" data-target="50">0</div>
+              <div class="counter-label">Картин</div>
+            </div>
+            <div class="col-4 counter-item">
+              <div class="counter-number" data-target="15">0</div>
+              <div class="counter-label">Выставок</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery" style="background: var(--dark-2);">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">Портфолио</span>
+        <h2 class="section-title mx-auto">Галерея <span>работ</span></h2>
+        <p class="section-subtitle mx-auto">Каждая картина — отдельная история. Нажмите, чтобы рассмотреть ближе.</p>
+      </div>
+
+      <div class="row g-4 gallery-grid">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1200&q=80"
+               data-title="Утро в Париже"
+               data-desc="Масло, холст. 2024. Отправлена на выставку в Carrousel du Louvre.">
+            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80" alt="Утро в Париже" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Утро в Париже</h5>
+              <p>Масло · 2024</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=80"
+               data-title="Внутренний свет"
+               data-desc="Масло, холст. 2023. Из серии «Воплоти мечту».">
+            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80" alt="Внутренний свет" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Внутренний свет</h5>
+              <p>Масло · 2023</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=1200&q=80"
+               data-title="Тишина"
+               data-desc="Масло, холст. 2023. Работа с фактурой и светом.">
+            <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80" alt="Тишина" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Тишина</h5>
+              <p>Масло · 2023</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1549281899-f75600a1f0b6?w=1200&q=80"
+               data-title="Дыхание осени"
+               data-desc="Масло, холст. 2022. Тёплая палитра, крупный мазок.">
+            <img src="https://images.unsplash.com/photo-1549281899-f75600a1f0b6?w=600&q=80" alt="Дыхание осени" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Дыхание осени</h5>
+              <p>Масло · 2022</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?w=1200&q=80"
+               data-title="Нежность"
+               data-desc="Масло, холст. 2022. Мягкие переходы и воздух.">
+            <img src="https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?w=600&q=80" alt="Нежность" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Нежность</h5>
+              <p>Масло · 2022</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal"
+               data-img="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=1200&q=80"
+               data-title="Воплоти мечту"
+               data-desc="Масло, холст. 2025. Центральная работа иммерсивного шоу.">
+            <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=600&q=80" alt="Воплоти мечту" loading="lazy">
+            <div class="gallery-overlay">
+              <h5>Воплоти мечту</h5>
+              <p>Масло · 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXHIBITIONS ===== -->
+  <section id="exhibitions">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">Хроника</span>
+        <h2 class="section-title mx-auto">Выставки и <span>события</span></h2>
+        <p class="section-subtitle mx-auto">Путь от первых работ до международных площадок.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024 · Париж</div>
+            <h5>Carrousel du Louvre</h5>
+            <p>Работы отправлены на выставку. Картины не вернулись — для меня это знак, что они нашли своего зрителя.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-left" data-aos-duration="800">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Декабрь 2025 · Москва</div>
+            <h5>Иммерсивное шоу «Воплоти мечту»</h5>
+            <p>Организатор выставки картин с выступлением спикеров. Тёплые отзывы гостей вдохновили на развитие этого направления.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Постоянно · Galyanov-Art</div>
+            <h5>Выставки школы живописи</h5>
+            <p>Регулярное участие в выставках школы. Поддерживаю связь с педагогами Всеволодом Гальяновым и Оксаной Архиповой.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" style="background: var(--dark-2);">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-5" data-aos="fade-right" data-aos-duration="1000">
+          <span class="section-label">Контакты</span>
+          <h2 class="section-title">Давайте <span>поговорим</span></h2>
+          <p class="section-subtitle mb-4">
+            Если вам откликнулась какая-то из работ, или вы хотите обсудить сотрудничество, выставку или заказ — напишите мне.
+          </p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Telegram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="VK">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.15 14.27h-1.45c-.55 0-.72-.44-1.71-1.43-.86-.83-1.24-.94-1.45-.94-.3 0-.38.08-.38.5v1.3c0 .36-.11.57-1.06.57-1.56 0-3.29-.95-4.51-2.71-1.84-2.58-2.34-4.52-2.34-4.92 0-.24.09-.46.5-.46h1.45c.37 0 .51.17.65.57.72 2.08 1.92 3.9 2.42 3.9.18 0 .27-.09.27-.55V9.71c-.06-.98-.58-1.06-.58-1.41 0-.17.14-.34.37-.34h2.28c.31 0 .42.17.42.54v2.9c0 .31.14.42.23.42.18 0 .34-.11.68-.45 1.05-1.17 1.8-2.98 1.8-2.98.1-.21.27-.41.64-.41h1.45c.44 0 .53.23.44.54-.18.84-1.94 3.31-1.94 3.31-.15.25-.21.36 0 .64.15.21.65.64 .98 1.03.61.69 1.07 1.27 1.2 1.67.12.4-.08.61-.49.61z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-7" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="150">
+          <form class="contact-form row g-3" onsubmit="event.preventDefault(); alert('Спасибо! Ваше сообщение отправлено.'); this.reset();">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Ваше имя" required>
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="col-12">
+              <textarea class="form-control" rows="5" placeholder="Сообщение..." required></textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn-gold w-100">Отправить сообщение</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p>© 2025 Галина. Все права защищены. Живопись, вдохновение, Париж.</p>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-0 position-relative">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          <img src="" alt="" class="w-100" id="modalImg" style="max-height: 70vh; object-fit: contain; background: #0a192f;">
+          <div class="p-4">
+            <h4 id="modalTitle" class="mb-2" style="font-family: var(--font-heading); color: var(--white);"></h4>
+            <p id="modalDesc" class="mb-0" style="color: var(--text);"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    // ===== AOS INIT =====
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 120,
+      easing: 'ease-out-cubic'
+    });
+
+    // ===== NAVBAR SCROLL =====
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ===== ACTIVE NAV LINK =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        if (window.scrollY >= top) current = sec.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    }, { passive: true });
+
+    // ===== HERO PARALLAX =====
+    const hero = document.querySelector('.hero');
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth > 991 && hero) {
+        hero.style.backgroundPositionY = window.pageYOffset * 0.35 + 'px';
+      }
+    }, { passive: true });
+
+    // ===== COUNTERS =====
+    document.querySelectorAll('.counter-number').forEach(counter => {
+      const target = +counter.dataset.target;
+      const duration = 2000;
+      let started = false;
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            const start = performance.now();
+            const animate = (now) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              counter.textContent = Math.floor(eased * target);
+              if (progress < 1) requestAnimationFrame(animate);
+              else counter.textContent = target;
+            };
+            requestAnimationFrame(animate);
+            observer.unobserve(counter);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(counter);
+    });
+
+    // ===== MODAL GALLERY =====
+    const galleryModal = document.getElementById('galleryModal');
+    galleryModal.addEventListener('show.bs.modal', (event) => {
+      const trigger = event.relatedTarget;
+      document.getElementById('modalImg').src = trigger.dataset.img;
+      document.getElementById('modalTitle').textContent = trigger.dataset.title;
+      document.getElementById('modalDesc').textContent = trigger.dataset.desc;
+    });
+  </script>
+</body>
+</html>
