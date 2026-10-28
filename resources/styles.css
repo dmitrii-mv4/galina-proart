@@ -1671,6 +1671,34 @@ section {
 /* ============================================================
        TESTIMONIALS
        ============================================================ */
+/* Медиа-шапка отзыва */
+.testi{
+  overflow:hidden;              /* чтобы картинка обрезалась по border-radius карточки */
+}
+.testi-media{
+  margin:-2rem -1.8rem 1.4rem;  /* вытягиваем на всю ширину карточки */
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--bg-3);
+  position:relative;
+}
+.testi-media::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 60%,rgba(23,19,16,.08) 100%);
+  pointer-events:none;
+}
+.testi-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 1s var(--ease);
+}
+.testi:hover .testi-media img{
+  transform:scale(1.06);
+}
+
 .testimonials {
     background: var(--bg);
 }
